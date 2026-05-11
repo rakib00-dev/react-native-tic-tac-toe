@@ -1,9 +1,16 @@
-import { FlatList, StatusBar, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, { JSX, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Snackbar } from 'react-native-snackbar';
-import { Icon } from 'react-native-vector-icons/Icon';
+import Icons from './components/Icons';
 
 export default function App(): JSX.Element {
   const [isCross, setIsCross] = useState<boolean>(false);
@@ -120,7 +127,29 @@ export default function App(): JSX.Element {
         </View>
       )}
 
-      <FlatList numColumns={3} data={gameState} renderItem={item => <></>} />
+      {/* Game Grid */}
+
+      <FlatList
+        numColumns={3}
+        style={styles.grid}
+        data={gameState}
+        renderItem={({ item, index }) => (
+          <Pressable
+            key={index}
+            style={styles.card}
+            onPress={() => onChangeItem(index)}
+          >
+            <Icons name={item} />
+          </Pressable>
+        )}
+      />
+
+      {/* game acton */}
+      <Pressable onPress={() => reloadGame()} style={styles.gameBtn}>
+        <Text style={styles.gameBtnText}>
+          {gameWinner ? 'Start A New Game' : 'Reload The Game'}
+        </Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -150,6 +179,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#FFFFFF',
     fontWeight: '600',
+    textAlign: 'center',
+    paddingVertical: 14,
   },
   playerX: {
     backgroundColor: '#38CC77',

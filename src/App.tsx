@@ -106,9 +106,19 @@ export default function App(): JSX.Element {
   return (
     <SafeAreaView>
       <StatusBar />
-      <View>
-        <Text>Tic Tac Toe With Rakib</Text>
-      </View>
+      {gameWinner ? (
+        <View style={[styles.winnerInfo, styles.playerInfo]}>
+          <Text style={styles.winnerTxt}>{gameWinner}</Text>
+        </View>
+      ) : (
+        <View
+          style={(styles.playerInfo, isCross ? styles.playerX : styles.playerO)}
+        >
+          <Text style={styles.gameTurnTxt}>
+            player {isCross ? 'X' : 'O'} 's turn
+          </Text>
+        </View>
+      )}
 
       <FlatList numColumns={3} data={gameState} renderItem={item => <></>} />
     </SafeAreaView>

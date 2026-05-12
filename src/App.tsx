@@ -128,7 +128,6 @@ export default function App(): JSX.Element {
       )}
 
       {/* Game Grid */}
-
       <FlatList
         numColumns={3}
         style={styles.grid}
